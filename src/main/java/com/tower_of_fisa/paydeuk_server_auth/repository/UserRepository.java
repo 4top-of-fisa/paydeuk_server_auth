@@ -2,7 +2,6 @@ package com.tower_of_fisa.paydeuk_server_auth.repository;
 
 import com.tower_of_fisa.paydeuk_server_auth.domain.entity.User;
 import java.util.Optional;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
