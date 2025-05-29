@@ -26,16 +26,6 @@ public class SecurityConfig {
   private final CustomAccessDeniedHandler accessDeniedHandler;
   private final HandlerExceptionResolver handlerExceptionResolver;
 
-  private static final String[] AUTH_WHITELIST = {
-    "/v3/api-docs",
-    "/v3/api-docs/**",
-    "/swagger-ui/**",
-    "/swagger-ui.html",
-    "/swagger-ui/index.html",
-    "/swagger-resources/**",
-    "/webjars/**"
-  };
-
   @Bean
   public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
     AuthenticationManagerBuilder builder = http.getSharedObject(AuthenticationManagerBuilder.class);
@@ -55,16 +45,6 @@ public class SecurityConfig {
     loginFilter.setFilterProcessesUrl("/api/signin");
 
     http.csrf(AbstractHttpConfigurer::disable)
-        .authorizeHttpRequests(
-            auth ->
-                auth.requestMatchers("/api/**", "/swagger-ui/**", "/v3/api-docs/**", "/redis/**")
-                    .permitAll()
-                    .requestMatchers("/api/admin/**")
-                    .hasRole("ADMIN")
-                    .requestMatchers("/api/card/**")
-                    .hasRole("USER")
-                    .requestMatchers("/api/user/**")
-                    .hasRole("USER"))
         .formLogin(AbstractHttpConfigurer::disable)
         .httpBasic(AbstractHttpConfigurer::disable)
         .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
