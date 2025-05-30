@@ -112,17 +112,6 @@ public class JwtProvider {
   }
 
   /**
-   * Redis에 저장된 블랙리스트 체크
-   *
-   * @param token JWT 토큰
-   * @return true이면 블랙리스트에 있음, false이면 블랙리스트에 없음
-   */
-  public boolean isBlacklisted(String token) {
-    String key = BLACKLIST_PREFIX + token;
-    return redisTemplate.hasKey(key);
-  }
-
-  /**
    * Redis에 저장된 RefreshToken을 삭제
    *
    * @param userId 사용자 ID

@@ -126,11 +126,6 @@ public class AuthService {
    * @return Map<String, String> - 재발급하는 Access 토큰과 Refresh 토큰
    */
   public Map<String, String> refreshAccessToken(String refreshToken, HttpServletResponse response) {
-
-    if (jwtProvider.isBlacklisted(refreshToken)) {
-      throw new AuthCredientialException401(ErrorDefineCode.AUTHENTICATE_FAIL);
-    }
-
     String username = jwtProvider.extractUsername(refreshToken);
     User user =
         userRepository
@@ -162,10 +157,6 @@ public class AuthService {
    */
   @Transactional
   public void logout(String accessToken, HttpServletResponse response) {
-    if (jwtProvider.isBlacklisted(accessToken)) {
-      throw new AuthCredientialException401(ErrorDefineCode.AUTHENTICATE_FAIL);
-    }
-
     String username = jwtProvider.extractUsername(accessToken);
     User user =
         userRepository
