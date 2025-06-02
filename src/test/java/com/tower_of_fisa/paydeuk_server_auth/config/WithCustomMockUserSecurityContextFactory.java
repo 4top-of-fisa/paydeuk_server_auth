@@ -1,6 +1,5 @@
 package com.tower_of_fisa.paydeuk_server_auth.config;
 
-
 import com.tower_of_fisa.paydeuk_server_auth.domain.entity.User;
 import com.tower_of_fisa.paydeuk_server_auth.domain.enums.UserRole;
 import com.tower_of_fisa.paydeuk_server_auth.global.config.security.CustomUserDetails;
