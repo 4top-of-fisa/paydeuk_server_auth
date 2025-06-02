@@ -19,6 +19,13 @@ spring:
       schema-locations: classpath:schema-test.sql
       data-locations:
 
+
+iamport:
+  api:
+    key: test_key
+    secret: test_secret
+
+
 logging.level:
   org.springframework.jdbc.datasource.init.ScriptUtils: debug
   org.hibernate.SQL: debug
