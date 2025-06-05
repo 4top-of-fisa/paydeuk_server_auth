@@ -15,21 +15,21 @@ public class ChangePasswordRequest {
 
   @NotBlank(message = "비밀번호를 입력해주세요.")
   @Pattern(
-          regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$",
-          message = "비밀번호는 8자 이상의 영문, 숫자, 특수문자를 포함해야 합니다.")
+      regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$",
+      message = "비밀번호는 8자 이상의 영문, 숫자, 특수문자를 포함해야 합니다.")
   @Schema(
-          description = "현재 비밀번호",
-          example = "Aa1234!@",
-          pattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$")
+      description = "현재 비밀번호",
+      example = "Aa1234!@",
+      pattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$")
   private String oldPassword;
 
   @NotBlank(message = "비밀번호를 입력해주세요.")
   @Pattern(
-          regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$",
-          message = "비밀번호는 8자 이상의 영문, 숫자, 특수문자를 포함해야 합니다.")
+      regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$",
+      message = "비밀번호는 8자 이상의 영문, 숫자, 특수문자를 포함해야 합니다.")
   @Schema(
-          description = "새로운 비밀번호",
-          example = "newPassword123!",
-          pattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$")
+      description = "새로운 비밀번호",
+      example = "newPassword123!",
+      pattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$")
   private String newPassword;
 }

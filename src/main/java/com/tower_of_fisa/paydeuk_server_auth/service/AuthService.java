@@ -187,7 +187,8 @@ public class AuthService {
   @Transactional
   public void changePassword(String accessToken, ChangePasswordRequest request) {
     String username = jwtProvider.extractUsername(accessToken);
-    User user = userRepository
+    User user =
+        userRepository
             .findByUsername(username)
             .orElseThrow(() -> new NoSuchElementFoundException404(ErrorDefineCode.USER_NOT_FOUND));
 
