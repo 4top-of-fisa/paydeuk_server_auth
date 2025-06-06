@@ -98,7 +98,7 @@ public class AuthController {
             content = {@Content(schema = @Schema(implementation = SwaggerErrorResponseType.class))})
       })
   public CommonResponse<Void> resetPassword(
-      @RequestParam String username, @Valid @RequestBody ResetPasswordRequest request) {
+      @RequestParam("username") String username, @Valid @RequestBody ResetPasswordRequest request) {
     authService.resetPassword(username, request);
     return new CommonResponse<>(true, HttpStatus.OK, "비밀번호가 성공적으로 변경되었습니다.", null);
   }

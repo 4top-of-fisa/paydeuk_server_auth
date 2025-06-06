@@ -28,6 +28,8 @@ public class VerifyService {
 
   private final UserRepository userRepository;
 
+  private final RestTemplate restTemplate;
+
   /**
    * imp_uid를 기반으로 Iamport 본인인증 결과를 조회한다.
    *
@@ -59,7 +61,6 @@ public class VerifyService {
    * @return 액세스 토큰 문자열
    */
   private String getAccessToken() {
-    RestTemplate restTemplate = new RestTemplate();
     String url = "https://api.iamport.kr/users/getToken";
 
     // 요청 헤더 설정 (Content-Type: application/json)
@@ -126,7 +127,6 @@ public class VerifyService {
    * @return 인증 결과 정보 (이름, 생년월일, 전화번호, 고유키 등)
    */
   private VerificationResponse getCertificationResult(String impUid, String accessToken) {
-    RestTemplate restTemplate = new RestTemplate();
 
     URI url =
         UriComponentsBuilder.fromHttpUrl("https://api.iamport.kr/certifications")
