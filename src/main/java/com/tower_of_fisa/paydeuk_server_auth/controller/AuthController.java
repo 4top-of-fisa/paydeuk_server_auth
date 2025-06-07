@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
+@Slf4j
 public class AuthController {
   private final AuthService authService;
 
@@ -70,7 +72,9 @@ public class AuthController {
             content = {@Content(schema = @Schema(implementation = SwaggerErrorResponseType.class))})
       })
   public CommonResponse<Long> signup(@Valid @RequestBody SignupRequest request) {
+    log.info("[회원가입 요청] username={}, phone={}", request.getUsername(), request.getPhone());
     authService.registerUser(request);
+    log.info("[회원가입 성공] username={}", request.getUsername());
     return new CommonResponse<>(true, HttpStatus.OK, "회원가입에 성공했습니다", null);
   }
 
@@ -146,7 +150,9 @@ public class AuthController {
   public CommonResponse<Void> logout(
       @RequestHeader("Authorization") String authHeader, HttpServletResponse response) {
     String accessToken = authHeader.replace("Bearer ", "");
+    log.info("[로그아웃 요청] accessTokenPrefix={}", accessToken.substring(0, 10));
     authService.logout(accessToken, response);
+    log.info("[로그아웃 완료]");
     return new CommonResponse<>(true, HttpStatus.OK, "로그아웃이 완료되었습니다.", null);
   }
 }
