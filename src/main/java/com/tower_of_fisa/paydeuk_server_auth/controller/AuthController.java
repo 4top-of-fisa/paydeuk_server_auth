@@ -155,4 +155,28 @@ public class AuthController {
     log.info("[로그아웃 완료]");
     return new CommonResponse<>(true, HttpStatus.OK, "로그아웃이 완료되었습니다.", null);
   }
+
+  @PostMapping("/change-password")
+  @Operation(summary = "AUTH_07 : 비밀번호 변경", description = "로그인한 사용자의 비밀번호를 변경합니다.")
+  @ApiResponses(
+      value = {
+        @ApiResponse(responseCode = "200", description = "비밀번호 변경 성공"),
+        @ApiResponse(
+            responseCode = "400",
+            description = "입력값 오류 또는 동일한 비밀번호",
+            content = {
+              @Content(schema = @Schema(implementation = SwaggerErrorResponseType.class))
+            }),
+        @ApiResponse(
+            responseCode = "401",
+            description = "인증되지 않은 사용자",
+            content = {@Content(schema = @Schema(implementation = SwaggerErrorResponseType.class))})
+      })
+  public CommonResponse<Void> changePassword(
+      @RequestHeader("Authorization") String authHeader,
+      @Valid @RequestBody ChangePasswordRequest request) {
+    String accessToken = authHeader.replace("Bearer ", "");
+    authService.changePassword(accessToken, request);
+    return new CommonResponse<>(true, HttpStatus.OK, "비밀번호가 성공적으로 변경되었습니다.", null);
+  }
 }

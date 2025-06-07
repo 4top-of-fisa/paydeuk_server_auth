@@ -27,6 +27,7 @@ public class AuthService {
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
   private final JwtProvider jwtProvider;
+  private final PaymentPinCodeValidator paymentPinCodeValidator;
 
   /**
    * [아이디 찾기] 본인인증 후 발급받은 personal_auth_key를 통해 사용자의 아이디를 조회한다.
@@ -94,6 +95,10 @@ public class AuthService {
   public void registerUser(SignupRequest request) {
     if (userRepository.findByUsername(request.getUsername()).isPresent()) {
       throw new AlreadyExistElementException409(ErrorDefineCode.DUPLICATE_EXAMPLE_NAME);
+    }
+
+    if (!paymentPinCodeValidator.isValid(request.getPaymentPinCode(), request.getBirthdate())) {
+      throw new BadRequestException400(ErrorDefineCode.INVALID_PAYMENT_PIN_CODE);
     }
 
     User user =
@@ -171,5 +176,34 @@ public class AuthService {
     jwtProvider.removeRefreshToken(user.getId());
 
     CookieUtil.deleteRefreshTokenCookie(response);
+  }
+
+  /**
+   * [비밀번호 변경] 로그인한 사용자의 비밀번호를 변경한다.
+   *
+   * @param accessToken 로그인한 사용자의 Access Token
+   * @param request 현재 비밀번호와 새 비밀번호를 포함한 요청 DTO
+   */
+  @Transactional
+  public void changePassword(String accessToken, ChangePasswordRequest request) {
+    String username = jwtProvider.extractUsername(accessToken);
+    User user =
+        userRepository
+            .findByUsername(username)
+            .orElseThrow(() -> new NoSuchElementFoundException404(ErrorDefineCode.USER_NOT_FOUND));
+
+    // 현재 비밀번호가 일치하지 않으면 에러
+    if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
+      throw new BadRequestException400(ErrorDefineCode.INVALID_CURRENT_PASSWORD);
+    }
+
+    // 기존 비밀번호와 동일하면 에러
+    if (passwordEncoder.matches(request.getNewPassword(), user.getPassword())) {
+      throw new BadRequestException400(ErrorDefineCode.PASSWORD_SAME_AS_CURRENT);
+    }
+
+    // 비밀번호 변경
+    user.changePassword(passwordEncoder.encode(request.getNewPassword()));
+    userRepository.save(user);
   }
 }

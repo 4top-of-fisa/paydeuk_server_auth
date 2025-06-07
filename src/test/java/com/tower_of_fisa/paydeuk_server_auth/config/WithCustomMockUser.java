@@ -1,8 +1,7 @@
 package com.tower_of_fisa.paydeuk_server_auth.config;
 
-import org.springframework.security.test.context.support.WithSecurityContext;
-
 import java.lang.annotation.*;
+import org.springframework.security.test.context.support.WithSecurityContext;
 
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

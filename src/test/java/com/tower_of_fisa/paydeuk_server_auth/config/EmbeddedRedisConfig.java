@@ -2,6 +2,7 @@ package com.tower_of_fisa.paydeuk_server_auth.config;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import java.io.IOException;
 import org.junit.jupiter.api.DisplayName;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
@@ -11,9 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import redis.embedded.RedisServer;
-
-
-import java.io.IOException;
 
 @DisplayName("Embedded Redis 설정")
 @Profile("test")
