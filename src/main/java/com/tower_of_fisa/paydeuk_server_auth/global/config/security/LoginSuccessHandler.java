@@ -24,8 +24,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
   @Override
   public void onAuthenticationSuccess(
-          HttpServletRequest request, HttpServletResponse response, Authentication authentication)
-          throws IOException {
+      HttpServletRequest request, HttpServletResponse response, Authentication authentication)
+      throws IOException {
 
     CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
     String accessToken = jwtProvider.generateAccessToken(userDetails.getUser());
@@ -43,16 +43,19 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     }
 
     // ✅ 로그인 성공 로그
-    log.info("[로그인 성공] username={}, role={}, accessToken={}",
-            userDetails.getUsername(), userDetails.getRoleName(), accessToken.substring(0, 10));
+    log.info(
+        "[로그인 성공] username={}, role={}, accessToken={}",
+        userDetails.getUsername(),
+        userDetails.getRoleName(),
+        accessToken.substring(0, 10));
 
     Map<String, String> tokenMap =
-            Map.of(
-                    "accessToken", accessToken,
-                    "redirectUrl", redirectUrl);
+        Map.of(
+            "accessToken", accessToken,
+            "redirectUrl", redirectUrl);
 
     CommonResponse<Map<String, String>> commonResponse =
-            new CommonResponse<>(true, HttpStatus.OK, "로그인에 성공했습니다.", tokenMap);
+        new CommonResponse<>(true, HttpStatus.OK, "로그인에 성공했습니다.", tokenMap);
 
     CookieUtil.setRefreshTokenCookie(response, refreshToken);
 
@@ -61,5 +64,4 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     response.setCharacterEncoding("UTF-8");
     response.getWriter().write(objectMapper.writeValueAsString(commonResponse));
   }
-
 }
