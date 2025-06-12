@@ -6,9 +6,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+import java.time.Duration;
 
 @Configuration
 public class RedisConfig {
@@ -19,8 +22,6 @@ public class RedisConfig {
   @Value("${spring.data.redis.port}")
   private int port;
 
-  @Value("${spring.data.redis.password}")
-  private String password;
 
   // Redis 연결
   @Bean
@@ -28,8 +29,10 @@ public class RedisConfig {
     RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
     config.setHostName(host);
     config.setPort(port);
-    config.setPassword(RedisPassword.of(password));
-    return new LettuceConnectionFactory(config);
+    LettuceClientConfiguration build = LettuceClientConfiguration.builder()
+            .useSsl()
+            .build();
+    return new LettuceConnectionFactory(config,build);
   }
 
   // Redis 데이터 처리를 위한 템플릿 구성

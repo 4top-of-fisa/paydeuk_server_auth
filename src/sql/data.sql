@@ -15,11 +15,11 @@ VALUES ('관리자', 'admin', '$2a$10$B4vWjDxTtmML4Uwx03JVMeRJgrcJC3tVlfPUVILfrA
 -- CARD TABLE
 -- card_id == 1
 INSERT INTO card (name, type, image_url, annual_fee, company, created_at, updated_at)
-VALUES ('현대카드 M', 'credit', 'dummyurl', 30000, 'HYUNDAI', NOW(), NOW()),
-('신한카드 Mr.Life', 'credit', 15000, 'SHINHAN' ,NOW(), NOW()),
-('KB국민 다담카드', 'credit', 'dummyurl', 15000, 'KOOKMIN', NOW(), NOW()),
-('삼성카드 taptap O', 'credit', 'dummyurl', 10000, 'SAMSUNG', NOW(), NOW()),
-('카드의 정석 오하CHECK', 'debit', 'dummyurl', 0, 'WOORI', NOW(), NOW());
+VALUES ('현대카드 M', 'credit', '/dummyurl', 30000, 'HYUNDAI', NOW(), NOW()),
+('신한카드 Mr.Life', 'credit','/dummyurl', 15000, 'SHINHAN' ,NOW(), NOW()),
+('KB국민 다담카드', 'credit', '/dummyurl', 15000, 'KOOKMIN', NOW(), NOW()),
+('삼성카드 taptap O', 'credit', '/dummyurl', 10000, 'SAMSUNG', NOW(), NOW()),
+('카드의 정석 오하CHECK', 'debit', '/dummyurl', 0, 'WOORI', NOW(), NOW());
 
 -- USER_CARD TABLE
 INSERT INTO user_card (user_id, card_id, card_token, card_number, is_default_card, created_at, updated_at)
