@@ -9,13 +9,12 @@ public class WebConfig implements WebMvcConfigurer {
   @Override
   public void addCorsMappings(CorsRegistry corsRegistry) {
     corsRegistry
-            .addMapping("/**")
-            .allowedOrigins(
-                    "https://paydeuk.com",
-                    "https://www.paydeuk.com"  // 추가된 도메인
+        .addMapping("/**")
+        .allowedOrigins(
+            "https://paydeuk.com", "https://www.paydeuk.com" // 추가된 도메인
             )
-            .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-            .allowedHeaders("Content-Type", "Authorization", "Access-Control-Allow-Origin")
-            .allowCredentials(true);  // 쿠키를 포함한 요청 허용
+        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+        .allowedHeaders("Content-Type", "Authorization", "Access-Control-Allow-Origin")
+        .allowCredentials(true); // 쿠키를 포함한 요청 허용
   }
 }
